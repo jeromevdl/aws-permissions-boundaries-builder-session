@@ -1,6 +1,6 @@
 # Permission Boundaries: How to Truly Delegate Permissions on AWS (Build Phase)
 
-As your organization grows the ability to delegate permission management to trusted employees becomes an important to successfully scaling. Permission boundaries addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you need to assign your system administrators the ability to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, in a controlled manner then you need permission boundaries.
+As your organization grows the ability to delegate permission management to trusted employees becomes important to scaling successfully. Permission boundaries addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you need to assign your system administrators the ability to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, in a controlled manner then you need permission boundaries.
 
 ![mechanism](./images/permission-boundaries.png)
 
