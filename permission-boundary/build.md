@@ -1,6 +1,6 @@
 # Permission Boundaries: How to Truly Delegate Permissions on AWS (Build Phase)
 
-Permission boundaries is probably one of the most important new IAM features that has launched in a while. This feature addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you have system administrators that need to be able to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, then you need permission boundaries.
+As your organization grows the ability to delegate permission management to trusted employees becomes an important to successfully scaling. Permission boundaries addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you need to assign your system administrators the ability to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, in a controlled manner then you need permission boundaries.
 
 ![mechanism](./images/permission-boundaries.png)
 
@@ -32,7 +32,7 @@ Permission boundaries is probably one of the most important new IAM features tha
 
 ![login-page](./images/pb-scenario.png)
 
-As the administrator for an AWS account hosting multiple production applications, you've been tasked with creating a new administrator role to delegate some of your responsibilities.  This new role will be responsible for doing all the administration on the resources for the **Ares Mission**.  The diagram above showcases the two applications currently being hosted in the AWS account and their associated resources. Currently there is only one application related to the Ares Mission but there is a plan to migrate three more applications for this mission by the end of the year.  The new role should account for current and future Ares Mission applications to reduce your overhead and friction with the web administrators.
+As the administrator for an AWS account hosting multiple production applications, you've been tasked with creating a new administrator role to delegate some of your responsibilities.  This new role will be responsible for doing all the administration on the resources for the **Ares Mission**.  The diagram above showcases the two applications currently being hosted in the AWS account and their associated resources. Currently there is one application but additional applications are planned.  The new role should account for current and future Ares Mission applications to reduce your overhead and friction with the web administrators.
 
 The web administrators for the Ares Mission should have permissions to create and administer resources related to that mission.  This means they should be able to:
 
@@ -48,7 +48,7 @@ The web administrators should not be able to impact any resources in the account
 **ACTION**: Create a new IAM policy that will act as the permission boundary for the web admins. Name the policy **`identity-ex-permissionboundary-ares-lambda`**
 
 >  **Hint**: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">Friendly Names and Paths
-</a>. The question marks **`????`** in the resource element below should be replaced with something that could act as a resource restriction. 
+</a>. Replace the ACCOUNT_ID with your account ID and the **'< >'** with a friendly name that can be used as a resource restriction.  
 
 ``` json
 {
@@ -67,7 +67,7 @@ The web administrators should not be able to impact any resources in the account
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-west-2:ACCOUNT_ID:log-group:/aws/lambda/identity-ex-????:*"
+            "Resource": "arn:aws:logs:us-west-2:ACCOUNT_ID:log-group:/aws/lambda/identity-ex-<>:*"
         },
         {
             "Sid": "AllowedS3GetObject",
@@ -75,7 +75,7 @@ The web administrators should not be able to impact any resources in the account
             "Action": [
                 "s3:List*"
             ],
-            "Resource": "arn:aws:s3:::identity-ex-????"
+            "Resource": "arn:aws:s3:::identity-ex-<>"
         }
     ]
 }
@@ -86,7 +86,7 @@ The web administrators should not be able to impact any resources in the account
 **ACTION**: Create the permission policy that will be attached to the **webadmin** AWS IAM user. Name the new policy **`identity-ex-webadmin-permissionpolicy`**. 
 
 >  **Hint**: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">Friendly Names and Paths
-</a>. The question marks **`????`** in the resource element below should be replaced with something that could act as a resource restriction. 
+</a>. Replace the ACCOUNT_ID with your account ID and the **'< >'** with a friendly name that can be used as a resource restriction. 
 
 ``` json
 {
@@ -102,7 +102,7 @@ The web administrators should not be able to impact any resources in the account
                 "iam:DeletePolicyVersion",
                 "iam:SetDefaultPolicyVersion"
             ],
-            "Resource": "arn:aws:iam::ACCOUNT_ID:policy/identity-ex-????"
+            "Resource": "arn:aws:iam::ACCOUNT_ID:policy/identity-ex-<>"
         },
         {
               "Sid": "RoleandPolicyActionswithnoPermissionBoundarySupport",
@@ -112,7 +112,7 @@ The web administrators should not be able to impact any resources in the account
                     "iam:DeleteRole"
             ],
             "Resource": [
-                "arn:aws:iam::ACCOUNT_ID:role/identity-ex-????"
+                "arn:aws:iam::ACCOUNT_ID:role/identity-ex-<>"
             ]
         },
         {
@@ -124,7 +124,7 @@ The web administrators should not be able to impact any resources in the account
                 "iam:DetachRolePolicy"
             ],
             "Resource": [
-                "arn:aws:iam::ACCOUNT_ID:role/identity-ex-????"
+                "arn:aws:iam::ACCOUNT_ID:role/identity-ex-<>"
             ],
             "Condition": {"StringEquals": 
                 {"iam:PermissionsBoundary": "arn:aws:iam::ACCOUNT_ID:policy/identity-ex-permissionboundary-ares-lambda"}
@@ -134,13 +134,13 @@ The web administrators should not be able to impact any resources in the account
             "Sid": "LambdaFullAccesswithResourceRestrictions",
             "Effect": "Allow",
             "Action": "lambda:*",
-            "Resource": "arn:aws:lambda:us-west-2:ACCOUNT_ID:function:identity-ex-????"
+            "Resource": "arn:aws:lambda:us-west-2:ACCOUNT_ID:function:identity-ex-<>"
         },
         {
             "Sid": "PassRoletoLambda",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::ACCOUNT_ID:role/identity-ex-????",
+            "Resource": "arn:aws:iam::ACCOUNT_ID:role/identity-ex-",
             "Condition": {
                 "StringLikeIfExists": {
                     "iam:PassedToService": "lambda.amazonaws.com"
