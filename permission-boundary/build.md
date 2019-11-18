@@ -140,7 +140,7 @@ The web administrators should not be able to impact any resources in the account
             "Sid": "PassRoletoLambda",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::ACCOUNT_ID:role/identity-ex-",
+            "Resource": "arn:aws:iam::ACCOUNT_ID:role/identity-ex-<>",
             "Condition": {
                 "StringLikeIfExists": {
                     "iam:PassedToService": "lambda.amazonaws.com"
