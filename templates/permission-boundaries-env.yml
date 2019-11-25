@@ -1,0 +1,490 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: This AWS CloudFormation Template configures an environment with the necessary resources to support the Permission Boundaries builder session..
+
+Parameters:
+  
+  ResourceNameApp1:
+    Type: String
+    Default: identity-ex-rover-app
+    AllowedValues: 
+      - identity-ex-rover-app
+    Description: Prefix of Resources created for App 1.
+
+  ResourceNameApp2:
+    Type: String
+    Default: identity-ex-ares-app
+    AllowedValues: 
+      - identity-ex-ares-app
+    Description: Prefix of Resources created for App 2.
+
+Metadata: 
+  AWS::CloudFormation::Interface:
+    ParameterGroups: 
+      - 
+        Label: 
+          default: "Resource Prefixes"
+        Parameters: 
+          - ResourceNameApp1
+          - ResourceNameApp2
+
+    ParameterLabels: 
+      ResourceNameApp1:
+        default: "Rover Mission"
+      ResourceNameApp2: 
+        default: "Ares Mission"
+
+Mappings: {}
+
+Conditions: {}
+
+Resources:
+
+############### App 1 ###############
+
+  # App 1 Describe Lambda
+  LambdaDescribeApp1: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda','describe']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp1
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaDescribeApp1Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaDescribeApp1Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda', 'describe']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # App 1 Aggregate Lambda
+  LambdaAggregateApp1: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda','aggregate']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp1
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaAggregateApp1Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaAggregateApp1Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda', 'aggregate']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # App 1 Sync Lambda
+  LambdaSyncApp1: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda','sync']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp1
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaSyncApp1Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaSyncApp1Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp1, 'lambda', 'sync']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+  App1Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
+      BucketName: 
+        Fn::Join:
+          - '-'
+          - [!Ref ResourceNameApp1, !Ref "AWS::AccountId", !Ref "AWS::Region",'data']
+
+############### App 2 ###############
+
+# App 2 Describe Lambda
+  LambdaDescribeApp2: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda','describe']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp2
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaDescribeApp2Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaDescribeApp2Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda', 'describe']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # App 2 Aggregate Lambda
+  LambdaAggregateApp2: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda','aggregate']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp2
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaAggregateApp2Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaAggregateApp2Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda', 'aggregate']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # App 2 Sync Lambda
+  LambdaSyncApp2: 
+    Type: "AWS::Lambda::Function"
+    Properties: 
+      FunctionName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda','sync']
+      Handler: "index.handler"
+      Environment:
+        Variables:
+          PREFIX: !Ref ResourceNameApp2
+      Role: 
+        Fn::GetAtt: 
+          - "LambdaSyncApp2Role"
+          - "Arn"
+      Code: 
+        ZipFile: |
+          from __future__ import print_function
+          import json
+
+          def handler(event, context):
+  
+            # Log Event
+            print("log -- Event: %s " % json.dumps(event))
+
+            # Set Response
+            return response
+      Runtime: "python2.7"
+      Timeout: "60"
+  LambdaSyncApp2Role: 
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: 
+        Fn::Join:
+        - '-'
+        - [!Ref ResourceNameApp2, 'lambda', 'sync']
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement: 
+          - 
+            Effect: Allow
+            Principal: 
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+      Path: /
+      Policies: 
+        - 
+          PolicyName: Policy
+          PolicyDocument: 
+            Version: 2012-10-17
+            Statement: 
+              - 
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+  ### App CloudTrail and App Bucket
+  CloudTrail: 
+    DependsOn: 
+      - App2Bucket
+      - LogBucketPolicy
+    Type: "AWS::CloudTrail::Trail"
+    Properties: 
+      S3BucketName: !Ref App2Bucket
+      IsLogging: true
+      EnableLogFileValidation: true
+      IsMultiRegionTrail: false
+      IncludeGlobalServiceEvents: true
+      TrailName: 
+        Fn::Join:
+          - '-'
+          - [!Ref ResourceNameApp2, 'trail']
+  App2Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
+      BucketName: 
+        Fn::Join:
+          - '-'
+          - [!Ref ResourceNameApp2, !Ref "AWS::AccountId", !Ref "AWS::Region",'data']
+  LogBucketPolicy: 
+    DependsOn: 
+      - App2Bucket
+    Type: "AWS::S3::BucketPolicy"
+    Properties: 
+      Bucket: !Ref App2Bucket
+      PolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Sid: "AWSCloudTrailAclCheck"
+            Effect: "Allow"
+            Principal: 
+              Service: "cloudtrail.amazonaws.com"
+            Action: "s3:GetBucketAcl"
+            Resource: 
+              Fn::Join:
+                - ''
+                - ["arn:aws:s3:::", !Ref App2Bucket]
+          - 
+            Sid: "AWSCloudTrailWrite"
+            Effect: "Allow"
+            Principal: 
+              Service: "cloudtrail.amazonaws.com"
+            Action: "s3:PutObject"
+            Resource:
+              Fn::Join:
+                - ''
+                - ["arn:aws:s3:::", !Ref App2Bucket,'/AWSLogs/*']
+            Condition: 
+              StringEquals:
+                s3:x-amz-acl: "bucket-owner-full-control"
+
+
+Outputs: {}
