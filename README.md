@@ -1,13 +1,12 @@
-## My Project
+## Scaling threat detection and response in AWS
 
-TODO: Fill this README out!
+This hands-on workshop is where you will learn about a number of AWS services involved with threat detection and response as we walk through real-world threat scenarios. Learn about the threat detection capabilities of Amazon GuardDuty, Amazon Macie and AWS Security Hub and the available response options. For each hands-on scenario, we review methods to detect and respond to threats using the following services: AWS CloudTrail, Amazon VPC flow logs, Amazon CloudWatch Events, Amazon Macie, AWS Lambda, Amazon Inspector, Amazon GuardDuty and Amazon Security Hub.
 
-Be sure to:
+## Start the workshop:
 
-* Change the title in this README
-* Edit your repository description on GitHub
+Visit the site to get started: [https://scaling-threat-detection.awssecworkshops.com/](https://scaling-threat-detection.awssecworkshops.com/)
 
-## License
+## License Summary
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+This sample code is made available under a modified MIT license. See the LICENSE file.
 
