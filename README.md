@@ -1,10 +1,10 @@
-## Scaling threat detection and response in AWS
+# Permission Boundaries: How to Truly Delegate Permissions on AWS (Build Phase)
 
-This hands-on workshop is where you will learn about a number of AWS services involved with threat detection and response as we walk through real-world threat scenarios. Learn about the threat detection capabilities of Amazon GuardDuty, Amazon Macie and AWS Security Hub and the available response options. For each hands-on scenario, we review methods to detect and respond to threats using the following services: AWS CloudTrail, Amazon VPC flow logs, Amazon CloudWatch Events, Amazon Macie, AWS Lambda, Amazon Inspector, Amazon GuardDuty and Amazon Security Hub.
+As your organization grows the ability to delegate permission management to trusted employees becomes important to scaling successfully. Permission boundaries addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you need to assign your system administrators the ability to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, in a controlled manner then you need permission boundaries.
 
 ## Start the workshop:
 
-Visit the site to get started: [https://scaling-threat-detection.awssecworkshops.com/](https://scaling-threat-detection.awssecworkshops.com/)
+Visit the site to get started: ([https://awssecworkshops.com/builder-sessions/permission-boundary/build/)
 
 ## License Summary
 
