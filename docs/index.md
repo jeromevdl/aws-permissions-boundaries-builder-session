@@ -4,9 +4,9 @@ As your organization grows the ability to delegate permission management to trus
 
 ![mechanism](./images/permission-boundaries.png)
 
-## Environment setup
+## Environment Setup
 
-To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: 
+To setup your environment please expand one of the following dropdown sections (depending on how you're doing this builder session) and follow the instructions: 
 
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
@@ -19,20 +19,18 @@ To setup your environment please expand one of the following dropdown sections (
 	3. Click **AWS Console**.  The CloudFormation template for this round has already been prerun.
 
 ??? info "Click here if you're running this individually in your own AWS Account"
-    Launch the CloudFormation stack below to configure your environment:
+
+    Launch the CloudFormation stack below to setup the Permission Boundary environment:
 
     Region| Deploy
     ------|-----
-    US East 1 (N. Virginia) | <a https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Identity-PB-Builder-Session&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/builder-sessions/permissionboundary/permission-boundaries-env.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
+    US West 2 (Oregon) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Identity-PB-Builder-Session&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/builder-sessions/permissionboundary/permission-boundaries-env.yml" target="_blank">![Deploy in us-west-2](./images/deploy-to-aws.png)</a>
 
-    1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
+    1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
 
-    2. Click **Next** on the **Specify Template** section.
+    2. Click **Next** on the **Specify Template**, **Specify Details, and **Options** sections.
 
-    3. On the **Specify Details** step click **Next**. 
-
-    4. Click **Next** on the **Options** section.
-    5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+    3. Finally, acknowledge that the template will create IAM roles under **Capabilities and click **Create**.
 
     This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
