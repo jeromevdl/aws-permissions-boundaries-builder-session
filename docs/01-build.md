@@ -6,13 +6,19 @@ As your organization grows the ability to delegate permission management to trus
 
 ## Environment Setup
 
-??? note "AWS Sponsored Event"
-    * Browse to the URL provided to you and login. 
-    * After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
+To setup your environment please expand one of the following dropdown sections (depending on how you're doing this builder session) and follow the instructions: 
 
-    ![login-page](./images/login.png)
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
-??? note "Individual"
+    <p style="font-size:20px;">
+      **Step 1** : Open the AWS Console
+    </p>
+	
+	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
+	2. Enter your **team hash** code. 
+	3. Click **AWS Console**.  The CloudFormation template for this round has already been prerun.
+
+??? info "Click here if you're running this individually in your own AWS Account"
 
     Launch the CloudFormation stack below to setup the Permission Boundary environment:
 
