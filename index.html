@@ -13,7 +13,7 @@
         <meta name="description" content="Permission boundaries is probably one of the most important new IAM features that has launched in a while. This feature addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you have system administrators that need to be able to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, then you need permission boundaries.">
       
       
-        <link rel="canonical" href="https://awssecworkshops.com/builder-sessions/permission-boundary/build/">
+        <link rel="canonical" href="https://permission-boundaries.awssecworkshops.com/">
       
       
         <meta name="author" content="aws-security-workshops@amazon.com">
@@ -143,7 +143,7 @@
                   Permission Boundaries How to Truly Delegate Permissions on AWS
                 </span>
                 <span class="md-header-nav__topic">
-                  Permission Boundaries: How to Truly Delegate Permissions on AWS (Build Phase)
+                  Overview
                 </span>
               
             
@@ -236,6 +236,16 @@
     <ul class="md-tabs__list">
       
         
+  <li class="md-tabs__item">
+    
+      <a href="." class="md-tabs__link md-tabs__link--active">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
       
         
       
@@ -278,7 +288,7 @@
 
   <!-- Site title -->
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://awssecworkshops.com/builder-sessions/permission-boundary/build/"
+    <a href="https://permission-boundaries.awssecworkshops.com/"
         title="Permission Boundaries How to Truly Delegate Permissions on AWS" class="md-nav__button md-logo">
       
         <img src="assets/images/aws_smile_logo.png" width="48" height="48" />
@@ -312,6 +322,56 @@
 
   <!-- Render item list -->
   <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Overview
+      </label>
+    
+    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
+      Overview
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scenario" class="md-nav__link">
+    Scenario
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
     
       
       
@@ -382,43 +442,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#environment-setup" class="md-nav__link">
-    Environment Setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#scenario" class="md-nav__link">
     Scenario
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-1-create-a-permission-boundary-for-lambda-functions" class="md-nav__link">
-    Task 1 - Create a permission boundary for Lambda Functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-2-create-a-permission-policy-for-the-web-admin" class="md-nav__link">
-    Task 2 - Create a permission policy for the Web Admin
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-3-create-the-web-admin-user" class="md-nav__link">
-    Task 3 - Create the Web Admin user
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-4-gather-info-needed-for-the-verify-phase" class="md-nav__link">
-    Task 4 - Gather info needed for the Verify phase
   </a>
   
 </li>
@@ -445,45 +470,6 @@
                 <h1 id="permission-boundaries-how-to-truly-delegate-permissions-on-aws-build-phase">Permission Boundaries: How to Truly Delegate Permissions on AWS (Build Phase)</h1>
 <p>As your organization grows the ability to delegate permission management to trusted employees becomes important to scaling successfully. Permission boundaries addresses a longstanding customer issue, namely, how do I delegate administration to my users. If you need to assign your system administrators the ability to create IAM roles and users, developers that need to be able to create roles for Lambda functions, or any similar scenario, in a controlled manner then you need permission boundaries.</p>
 <p><img alt="mechanism" src="images/permission-boundaries.png" /></p>
-<h2 id="environment-setup">Environment Setup</h2>
-<p>To setup your environment please expand one of the following dropdown sections (depending on how you're doing this builder session) and follow the instructions: </p>
-<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
-  <strong>Step 1</strong> : Open the AWS Console
-</p></p>
-<ol>
-<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
-<li>Enter your <strong>team hash</strong> code. </li>
-<li>Click <strong>AWS Console</strong>.  The CloudFormation template for this round has already been prerun.</li>
-</ol>
-</details>
-<details class="info"><summary>Click here if you're running this individually in your own AWS Account</summary><p>Launch the CloudFormation stack below to setup the Permission Boundary environment:</p>
-<table>
-<thead>
-<tr>
-<th>Region</th>
-<th>Deploy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>US West 2 (Oregon)</td>
-<td><a href="https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Identity-PB-Builder-Session&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/builder-sessions/permissionboundary/permission-boundaries-env.yml" target="_blank"><img alt="Deploy in us-west-2" src="images/deploy-to-aws.png" /></a></td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>
-<p>Click the <strong>Deploy to AWS</strong> button above.  This will automatically take you to the console to run the template.  </p>
-</li>
-<li>
-<p>Click <strong>Next</strong> on the <strong>Specify Template</strong>, <strong>Specify Details, and </strong>Options** sections.</p>
-</li>
-<li>
-<p>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities and click </strong>Create**.</p>
-</li>
-</ol>
-<p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
-</details>
 <h2 id="scenario">Scenario</h2>
 <p><img alt="login-page" src="images/pb-scenario.png" /></p>
 <p>As the administrator for an AWS account hosting multiple production applications, you've been tasked with creating a new administrator role to delegate some of your responsibilities.  This new role will be responsible for doing all the administration on the resources for the <strong>Ares Mission</strong>.  The diagram above showcases the two applications currently being hosted in the AWS account and their associated resources. Currently there is one application but additional applications are planned.  The new role should account for current and future Ares Mission applications to reduce your overhead and friction with the web administrators.</p>
@@ -493,162 +479,6 @@
 <li>Create, modify, and delete Ares Mission Lambda functions.</li>
 </ol>
 <p>The web administrators should not be able to impact any resources in the account that are not part of the Ares Mission application including users, groups, roles, S3 buckets, EC2 instances, etc.  In this case, they should not be able to modify resources of the Rover Mission.</p>
-<blockquote>
-<p>All resources are located in the <strong>us-west-2</strong> region.</p>
-</blockquote>
-<h2 id="task-1-create-a-permission-boundary-for-lambda-functions">Task 1 - Create a permission boundary for Lambda Functions</h2>
-<p><strong>ACTION</strong>: Create a new IAM policy that will act as the permission boundary for the web admins. Name the policy <strong><code>identity-ex-permissionboundary-ares-lambda</code></strong></p>
-<blockquote>
-<p><strong>Hint</strong>: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">Friendly Names and Paths
-</a>. Replace the ACCOUNT_ID with your account ID and the <strong>'&lt; &gt;'</strong> with a friendly name that can be used as a resource restriction.  </p>
-</blockquote>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogGroup&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;logs:CreateLogGroup&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-west-2:ACCOUNT_ID:*&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogStreamandEvents&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;logs:CreateLogStream&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;logs:PutLogEvents&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-west-2:ACCOUNT_ID:log-group:/aws/lambda/identity-ex-&lt;&gt;:*&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AllowedS3GetObject&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;s3:List*&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::identity-ex-&lt;&gt;&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2 id="task-2-create-a-permission-policy-for-the-web-admin">Task 2 - Create a permission policy for the Web Admin</h2>
-<p><strong>ACTION</strong>: Create the permission policy that will be attached to the <strong>webadmin</strong> AWS IAM user. Name the new policy <strong><code>identity-ex-webadmin-permissionpolicy</code></strong>. </p>
-<blockquote>
-<p><strong>Hint</strong>: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">Friendly Names and Paths
-</a>. Replace the ACCOUNT_ID with your account ID and the <strong>'&lt; &gt;'</strong> with a friendly name that can be used as a resource restriction. </p>
-</blockquote>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateCustomerManagedPolicies&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;iam:CreatePolicy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:DeletePolicy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:CreatePolicyVersion&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:DeletePolicyVersion&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:SetDefaultPolicyVersion&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:policy/identity-ex-&lt;&gt;&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-              <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;RoleandPolicyActionswithnoPermissionBoundarySupport&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="s2">&quot;iam:UpdateRole&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;iam:DeleteRole&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:role/identity-ex-&lt;&gt;&quot;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateRoles&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;iam:CreateRole&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:AttachRolePolicy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:DetachRolePolicy&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:role/identity-ex-&lt;&gt;&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> 
-                <span class="p">{</span><span class="nt">&quot;iam:PermissionsBoundary&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:policy/identity-ex-permissionboundary-ares-lambda&quot;</span><span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LambdaFullAccesswithResourceRestrictions&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda:*&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:lambda:us-west-2:ACCOUNT_ID:function:identity-ex-&lt;&gt;&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;PassRoletoLambda&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;iam:PassRole&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:role/identity-ex-&lt;&gt;&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="nt">&quot;StringLikeIfExists&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="nt">&quot;iam:PassedToService&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda.amazonaws.com&quot;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AdditionalPermissionsforLambda&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span>   <span class="p">[</span><span class="s2">&quot;kms:ListAliases&quot;</span><span class="p">,</span> <span class="s2">&quot;logs:Describe*&quot;</span><span class="p">,</span> <span class="s2">&quot;logs:ListTagsLogGroup&quot;</span><span class="p">,</span> <span class="s2">&quot;logs:FilterLogEvents&quot;</span><span class="p">,</span> <span class="s2">&quot;logs:GetLogEvents&quot;</span><span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;DenyPermissionBoundaryandPolicyDeleteModify&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Deny&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;iam:CreatePolicyVersion&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:DeletePolicy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:DeletePolicyVersion&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;iam:SetDefaultPolicyVersion&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:policy/identity-ex-permissionboundary-ares-lambda&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arn:aws:iam::ACCOUNT_ID:policy/identity-ex-webadmin-permissionpolicy&quot;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;DenyRolePermissionBoundaryDelete&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Deny&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;iam:DeleteRolePermissionsBoundary&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2 id="task-3-create-the-web-admin-user">Task 3 - Create the Web Admin user</h2>
-<p><strong>ACTION</strong>:</p>
-<ul>
-<li>Create an IAM User and name it <code>webadmin</code>. The user will need console access so give it a password.</li>
-<li>Attach the <strong>identity-ex-webadmin-permissionpolicy</strong>, <strong>IAMReadOnlyAccess</strong> &amp; <strong>AWSLambdaReadOnlyAccess</strong> policies to the IAM user.</li>
-</ul>
-<p>When you are done the <strong>webadmin</strong> user should have three policies attached: identity-ex-webadmin-permissionpolicy, IAMReadOnlyAccess &amp; AWSLambdaReadOnlyAccess.</p>
-<h2 id="task-4-gather-info-needed-for-the-verify-phase">Task 4 - Gather info needed for the Verify phase</h2>
-<p><strong>ACTION</strong>: Now that you have setup the IAM user for the web admins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. You need to gather some details about your IAM user and then hand this info to the next team.</p>
-<p>Copy the <strong>IAM users sign-in link</strong>, the IAM user name (if you used a name other then <strong>webadmin</strong>) and the password you used. You will also need the resource restriction that you used in your policies and the name you used for the permission policy and permission boundary (if you used names other than the ones recommended above)</p>
-<p>Here are all of the details you need to pass to another team:</p>
-<ul>
-<li>IAM users sign-in link:   </li>
-<li>IAM user name:    </li>
-<li>IAM user password:    </li>
-<li>Resource restriction identifier:  </li>
-<li>Permission boundary name: (recommended name: <strong>identity-ex-permissionboundary-ares-lambda</strong>)</li>
-<li>Permission policy: (recommended name: <strong>identity-ex-webadmin-permissionpolicy</strong>)</li>
-</ul>
-<p>Enter this information into the <strong>VERIFY</strong> phase form and exchange forms with another team so you both can work through the tasks.</p>
-<p>You can now move on to the <strong>Verify</strong> phase!</p>
                 
                   
                 
@@ -665,6 +495,27 @@
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+        
+          <a href="01-build/" title="Module 1: Environment Build" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Module 1: Environment Build
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
