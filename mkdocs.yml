@@ -18,8 +18,6 @@ theme:
   name: 'material'
   logo: 'assets/images/aws_smile_logo.png'
   favicon: 'assets/images/aws-favicon.ico'
-  feature:
-    tabs: true
   custom_dir: 'docs/theme'
 
 # Customization
@@ -27,14 +25,12 @@ extra_css:
   - 'stylesheets/custom.css'
 extra:
   social:
-    - type: 'home'
-      link: 'https://awssecworkshops.com'
-    - type: 'shield'
-      link: 'https://aws.amazon.com/security/'
-    - type: 'twitter'
-      link: 'https://twitter.com/awssecurityinfo?lang=en'
-    - type: 'rss'
-      link: 'https://aws.amazon.com/blogs/security/'
+    - icon: fontawesome/solid/home
+      link: https://awssecworkshops.com
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/awssecurityinfo?lang=en
+    - icon: fontawesome/solid/rss-square
+      link: https://aws.amazon.com/blogs/security/
 
 # Extensions
 markdown_extensions:
