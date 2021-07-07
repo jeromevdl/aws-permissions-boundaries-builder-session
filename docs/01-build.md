@@ -36,7 +36,7 @@ To setup your environment please expand one of the following dropdown sections (
 **ACTION**: Create a new IAM policy that will act as the permission boundary for the web admins. Name the policy **`identity-ex-permissionboundary-ares-lambda`**
 
 >  **Hint**: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">Friendly Names and Paths
-</a>. Replace the ACCOUNT_ID with your account ID and the **'< >'** with a friendly name that can be used as a resource restriction.  
+</a>. Replace the ACCOUNT_ID with your account ID.
 
 ``` json
 {
@@ -55,7 +55,7 @@ To setup your environment please expand one of the following dropdown sections (
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-west-2:ACCOUNT_ID:log-group:/aws/lambda/identity-ex-<>:*"
+            "Resource": "arn:aws:logs:us-west-2:ACCOUNT_ID:log-group:/aws/lambda/identity-ex-ares*:*"
         },
         {
             "Sid": "AllowedS3GetObject",
@@ -122,7 +122,7 @@ To setup your environment please expand one of the following dropdown sections (
             "Sid": "LambdaFullAccesswithResourceRestrictions",
             "Effect": "Allow",
             "Action": "lambda:*",
-            "Resource": "arn:aws:lambda:us-west-2:ACCOUNT_ID:function:identity-ex-<>"
+            "Resource": "arn:aws:lambda:us-east-1:ACCOUNT_ID:function:identity-ex-ares*"
         },
         {
             "Sid": "PassRoletoLambda",
@@ -176,8 +176,6 @@ When you are done the **webadmin** user should have three policies attached: ide
 
 ## Task 4 - Gather info needed for the Verify phase
 
-**ACTION**: Now that you have setup the IAM user for the web admins, it's time to pass this information on to the next team who will work through the **VERIFY** tasks. You need to gather some details about your IAM user and then hand this info to the next team.
-
 Copy the **IAM users sign-in link**, the IAM user name (if you used a name other then **webadmin**) and the password you used. You will also need the resource restriction that you used in your policies and the name you used for the permission policy and permission boundary (if you used names other than the ones recommended above)
 
 Here are all of the details you need to pass to another team:
@@ -188,7 +186,5 @@ Here are all of the details you need to pass to another team:
 * Resource restriction identifier:  
 * Permission boundary name: (recommended name: **identity-ex-permissionboundary-ares-lambda**)
 * Permission policy: (recommended name: **identity-ex-webadmin-permissionpolicy**)
-
-Enter this information into the **VERIFY** phase form and exchange forms with another team so you both can work through the tasks.
 
 You can now move on to the **Verify** phase!
