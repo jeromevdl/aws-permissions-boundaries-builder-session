@@ -63,7 +63,7 @@ To setup your environment please expand one of the following dropdown sections (
             "Action": [
                 "s3:List*"
             ],
-            "Resource": "arn:aws:s3:::identity-ex-<>"
+            "Resource": "arn:aws:s3:::identity-ex-ares-*"
         }
     ]
 }
